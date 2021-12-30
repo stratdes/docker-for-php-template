@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+  console:
+    image: php:8.1.1-cli-alpine3.15
+    working_dir: /var/www
+    volumes:
+      - ../app:/var/www:delegated
+  php-fpm:
+    image: php:8.1.1-fpm-alpine3.15
+    working_dir: /var/www
+    volumes:
+      - ../app:/var/www:delegated
+  nginx:
+    image: nginx:1.21.5-alpine
+    working_dir: /var/www
+    volumes:
+      - ../app:/var/www:delegated
+      - ./host.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
